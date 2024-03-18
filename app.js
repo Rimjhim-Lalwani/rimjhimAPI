@@ -1,34 +1,38 @@
+
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const app = express();
-const PORT = process.env.PORT || 3000;
-
+const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
-
 app.post('/bfhl', (req, res) => {
+  try {
+    const data = req.body.data;
+    const userId = "john_doe_17091999";
+    const email = "john@xyz.com";
+    const rollNumber = "ABCD123";
+    const oddNumbers = data.filter(num => num % 2 !== 0);
+    const evenNumbers = data.filter(num => num % 2 === 0);
+    const alphabets = data.filter(ch => /[a-zA-Z]/.test(ch)).map(ch => ch.toUpperCase());
 
-  const { data } = req.body;
+   
+    const response = {
+      is_success: true,
+      user_id: userId,
+      email: email,
+      roll_number: rollNumber,
+      odd_numbers: oddNumbers,
+      even_numbers: evenNumbers,
+      alphabets: alphabets
+    };
 
-  const alphabets = data.filter(item => typeof item === 'string').map(item => item.toUpperCase());
-  const numbers = data.filter(item => typeof item === 'number');
-  const evenNumbers = numbers.filter(number => number % 2 === 0);
-  const oddNumbers = numbers.filter(number => number % 2 !== 0);
-
-  const response = {
-    is_success: true,
-    user_id: "john_doe_17091999",
-    email: "john@xyz.com",
-    roll_number: "ABCD123", 
-    alphabets,
-    even_numbers: evenNumbers,
-    odd_numbers: oddNumbers
-  };
-
-  // Send the response
-  res.json(response);
+    res.json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ is_success: false, error: "Internal Server Error" });
+  }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
