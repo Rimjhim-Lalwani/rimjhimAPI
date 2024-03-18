@@ -1,8 +1,8 @@
 {
   "name": "rimjhim",
   "version": "1.0.0",
-  "description": "npm install express",
-  "main": "index.js",
+  "description": "",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
